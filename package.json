@@ -1,0 +1,27 @@
+{
+  "name": "recipe-app",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Tokiosman80F/recipe-app#readme",
+  "bugs": {
+    "url": "https://github.com/Tokiosman80F/recipe-app/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tokiosman80F/recipe-app.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "dependencies": {
+    "sass": "^1.98.0"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.16.4",
+    "parcel": "^2.16.4"
+  }
+}
