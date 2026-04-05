@@ -1,5 +1,8 @@
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import icons from 'url:../img/icons.svg';
 import '../sass/main.scss';
+
 const recipeContainer = document.querySelector('.recipe');
 
 const timeout = function (s) {
