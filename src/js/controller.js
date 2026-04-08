@@ -1,6 +1,9 @@
+import * as model from './model.js';
+import recipeView from './view/recipeView.js';
+
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import icons from 'url:../img/icons.svg';
+
 import '../sass/main.scss';
 
 const recipeContainer = document.querySelector('.recipe');
@@ -18,42 +21,19 @@ const timeout = function (s) {
 
 ///////////////////////////////////////
 
-const renderSpinner = function (parentEl) {
-  const markup = `
-  <div class="spinner">
-          <svg>
-            <use href="${icons}#icon-loader"></use>
-          </svg>
-        </div>
-  `;
-  parentEl.innerHTML = '';
-  parentEl.insertAdjacentHTML('afterbegin', markup);
-};
-
-const fetchData = async function () {
+const controlRecipes = async function () {
   try {
-    renderSpinner(recipeContainer);
-    const res = await fetch(
-      'https://forkify-api.jonas.io/api/v2/recipes/5ed6604591c37cdc054bc886',
-    );
-    const data = await res.json();
-    if (!res.ok) throw new Error(`${data.message} (${res.status})`);
-    // console.log(data.data);
+    const id = window.location.hash.slice(1);
+    console.log(id);
 
-    let { recipe } = data.data;
-    console.log('before:', recipe);
-    recipe = {
-      id: recipe.id,
-      title: recipe.title,
-      publisher: recipe.publisher,
-      sourceUrl: recipe.source_url,
-      image: recipe.image_url,
-      servings: recipe.servings,
-      ingredients: recipe.ingredients,
-      cookingTime: recipe.cooking_time,
-    };
-    console.log('after:', recipe);
+    if (!id) return;
 
+    recipeView.renderSpinner();
+    // 1 loading recipe
+    await model.loadRecipe(id);
+    const { recipe } = model.state;
+    // 2. Rendering recipe
+    recipeView.render(model.state.recipe);
     const render = `
      <figure class="recipe__fig">
           <img src=${recipe.image} alt="Tomato" class="recipe__img" />
@@ -152,4 +132,7 @@ const fetchData = async function () {
   }
 };
 
-fetchData();
+['load', 'hashchange'].forEach(e => {
+  window.addEventListener(e, controlRecipes);
+});
+// window.addEventListener('hashchange', controlRecipes);
