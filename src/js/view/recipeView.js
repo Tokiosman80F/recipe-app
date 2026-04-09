@@ -4,6 +4,9 @@ class RecipeView {
   #parentElement = document.querySelector('.recipe');
   #data;
 
+  #clear() {
+    this.#parentElement.innerHTML = '';
+  }
   renderSpinner = function () {
     const markup = `
   <div class="spinner">
@@ -21,10 +24,7 @@ class RecipeView {
     const markup = this.#generateMarkup();
 
     this.#clear();
-    this.#generateMarkup.insertAdjacentHTML('beforeend', render);
-  }
-  #clear() {
-    this.#parentElement.innerHTML = '';
+    this.#parentElement.insertAdjacentHTML('beforeend', markup);
   }
 
   #generateMarkup() {
@@ -116,8 +116,7 @@ class RecipeView {
                   <use href="${icons}#icon-arrow-right"></use>
                 </svg>
               </a>
-            </div>
-        
+            </div>        
         `;
   }
 }
